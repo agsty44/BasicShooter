@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KillEnemy : MonoBehaviour
 {
-    public GameObject template; //Set in inspector.
+    [SerializeField] private GameObject template; //Set in inspector.
     // Start is called before the first frame update
     void Start()
     {

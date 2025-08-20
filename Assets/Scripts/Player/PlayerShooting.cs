@@ -7,15 +7,16 @@ using TMPro;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public RaycastHit playerBulletInfo;
+    private RaycastHit playerBulletInfo;
     private Ray bulletTrajectory;
     private float timeBetweenFiring = 0;
-    public float shootLagTime = 0.15f; //Edit this from the inspector for diff fire rates.
+    [SerializeField] private float shootLagTime = 0.15f; //Edit this from the inspector for diff fire rates.
     private bool triggerReleased = true;
     private int ammoCount = 12;
     private float timeReloading = 0;
-    public float reloadLength = 0.5f; //Edit this for diff reload times.
-    public TextMeshProUGUI ammoCountDisplay; //Set this in inspector.
+    [SerializeField] private float reloadLength = 0.5f; //Edit this for diff reload times.
+    [SerializeField] private TextMeshProUGUI ammoCountDisplay; //Set this in inspector.
+    [SerializeField] private UIHandling pauseCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,12 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //This check has been added to all code: it stops activity if "paused" is true.
+        if (pauseCheck.paused)
+        {
+            return;
+        }
+
         bulletTrajectory = Camera.main.ViewportPointToRay(new Vector3 (0.5f, 0.5f, 0));
 
         //test ray directions

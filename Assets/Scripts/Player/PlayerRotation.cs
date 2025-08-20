@@ -7,6 +7,7 @@ public class PlayerRotation : MonoBehaviour
     //Retrieve settings
     private PlayerSettings settings;
     private float mouseSens;
+    [SerializeField] private UIHandling pauseCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,12 @@ public class PlayerRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //This check has been added to all code: it stops activity if "paused" is true.
+        if (pauseCheck.paused)
+        {
+            return;
+        }
+
         float horizontalInput = Input.GetAxis("Mouse X");
 
         float rotationVal = horizontalInput * mouseSens;

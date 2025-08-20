@@ -10,6 +10,7 @@ public class PlayerMotion : MonoBehaviour
     //We need to gather necessary variables from settings.
     private PlayerSettings settings;
     private float gravConstant, initialJumpVelo, playerSpeed;
+    [SerializeField] private UIHandling pauseCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,12 @@ public class PlayerMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //This check has been added to all code: it stops activity if "paused" is true.
+        if (pauseCheck.paused)
+        {
+            return;
+        }
+
         //Calculate gravity.
         if (!playerControl.isGrounded)
         {
