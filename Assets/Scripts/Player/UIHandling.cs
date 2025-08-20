@@ -13,6 +13,7 @@ public class UIHandling : MonoBehaviour
     {
         //As this is a shooter, we should start locked.
         Cursor.lockState = CursorLockMode.Locked;
+        pauseUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -20,28 +21,30 @@ public class UIHandling : MonoBehaviour
     {
         if (Input.GetKeyDown("escape"))
         {
-            paused ^= true;
-            //Ok, what the fuck is this?
-            //this is an XOR. so there are 2 cases:
-
-            //case 1 - paused = true
-            //as this is XOR, if both A and B are 1, we return 0, inverting the bool.
-
-            //case 2 - paused = false
-            //A is 0, B is 1. return 1. bool inverted.
-
-            //Now we should handle changes to the UI which are made upon pause/unpause.
-            //Do this with a function: it means we can have a "resume" function.
-
             PauseMenu();
         }
     }
 
-    void PauseMenu()
+    public void PauseMenu()
     {
         //We need to set the mouse lock status to the INVERSE of the paused bool
         //So if paused is true, lockedmouse is false, vice versa.
         //We also need to set the visibility of the UI to the same as paused bool.
+
+        Debug.Log("Pause Pressed!");
+
+        paused ^= true;
+        //Ok, what the fuck is this?
+        //this is an XOR. so there are 2 cases:
+
+        //case 1 - paused = true
+        //as this is XOR, if both A and B are 1, we return 0, inverting the bool.
+
+        //case 2 - paused = false
+        //A is 0, B is 1. return 1. bool inverted.
+
+        //Now we should handle changes to the UI which are made upon pause/unpause.
+        //Do this with a function: it means we can have a "resume" function with a button.
 
         pauseUI.SetActive(paused);
         if (paused)
@@ -52,5 +55,10 @@ public class UIHandling : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit(); //it's probably wrong, but im using a wrapper because it makes it easy to call in the OnClick()
     }
 }
