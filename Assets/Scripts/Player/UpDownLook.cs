@@ -7,7 +7,7 @@ public class UpDownLook : MonoBehaviour
     //To retrieve settings, we have to scale up the hierarchy
     private Transform playerObj;
     private PlayerSettings settings;
-    private float mouseSens;
+    private float mouseSens, rotationTotal;
     [SerializeField] private UIHandling pauseCheck;
     
     // Start is called before the first frame update
@@ -27,8 +27,27 @@ public class UpDownLook : MonoBehaviour
             return;
         }
 
+        mouseSens = settings.mouseSens;
+
         float verticalInput = Input.GetAxis("Mouse Y");
         float rotationVal = verticalInput * mouseSens;
+
+        rotationTotal += rotationVal;
+
+        Debug.Log("vert sens:" + mouseSens);
+
+        //Handle infinite rotation case
+        if (rotationTotal > 90)
+        {
+            rotationTotal = 90;
+            return;
+        }
+        else if (rotationTotal < -90)
+        {
+            rotationTotal = -90;
+            return;
+        }
+        
         transform.Rotate(rotationVal, 0, 0);
     }
 }

@@ -16,6 +16,11 @@ public class PlayerRotation : MonoBehaviour
         mouseSens = settings.mouseSens;
     }
 
+    public void SensChange()
+    {
+        mouseSens = settings.mouseSens;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,10 +30,14 @@ public class PlayerRotation : MonoBehaviour
             return;
         }
 
+        mouseSens = settings.mouseSens;
+
         float horizontalInput = Input.GetAxis("Mouse X");
 
         float rotationVal = horizontalInput * mouseSens;
 
         transform.Rotate(0, rotationVal, 0);
+
+        Debug.Log("rotation sens:" + mouseSens);
     }
 }
