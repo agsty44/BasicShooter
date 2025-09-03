@@ -15,7 +15,7 @@ public class UpDownLook : MonoBehaviour
     {
         playerObj = transform.parent;
         settings = playerObj.GetComponent<PlayerSettings>();
-        mouseSens = settings.mouseSens;
+        mouseSens = PlayerPrefs.GetFloat("sensitivity");
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class UpDownLook : MonoBehaviour
             return;
         }
 
-        mouseSens = settings.mouseSens;
+        mouseSens = PlayerPrefs.GetFloat("sensitivity");
 
         float verticalInput = Input.GetAxis("Mouse Y");
         float rotationVal = verticalInput * mouseSens;

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIHandling : MonoBehaviour
 {
 
     public bool paused = false;
-    [SerializeField] private GameObject pauseUI, crosshair, ammocount, settingsUI;
+    [SerializeField] private GameObject pauseUI, crosshair, ammocount, settingsUI, quitUI;
     [SerializeField] private Slider sensitivitySlider;
     [SerializeField] private TextMeshProUGUI sensText;
 
@@ -25,6 +26,7 @@ public class UIHandling : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pauseUI.SetActive(false);
         settingsUI.SetActive(false);
+        quitUI.SetActive(false);
 
         GameObject[] HUDparts = {crosshair, ammocount};
 
@@ -99,6 +101,23 @@ public class UIHandling : MonoBehaviour
     public void ChangeSensText()
     {
         sensText.text = "Sensitivity: " + sensitivitySlider.value;
+    }
+
+    public void OpenQuitMenu()
+    {
+        pauseUI.SetActive(false);
+        quitUI.SetActive(true);
+    }
+
+    public void CloseQuitMenu()
+    {
+        pauseUI.SetActive(true);
+        quitUI.SetActive(false);
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()

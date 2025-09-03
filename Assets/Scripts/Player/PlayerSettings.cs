@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerSettings : MonoBehaviour
 {
     //Customisable settings are put here (sensitivity, physics values.)
-    public float mouseSens = 1.0f; //Mouse sensitivity multiplier.
     public float playerSpeed = 5.0f; //Velocity multiplier.
     public float gravConstant = 9.8f; //How fast is gravity?
     public float initialJumpVelo = 2.7f; //How fast should they jump?
@@ -15,7 +14,15 @@ public class PlayerSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //Check that the key for sensitivity exists already
+        if (PlayerPrefs.HasKey("sensitivity"))
+        {
+            sensSlider.value = PlayerPrefs.GetFloat("sensitivity");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("sensitivity", 1f);
+        }
     }
 
     // Update is called once per frame
@@ -26,6 +33,6 @@ public class PlayerSettings : MonoBehaviour
 
     public void SensitivityChange()
     {
-        mouseSens = sensSlider.value;
+        PlayerPrefs.SetFloat("sensitivity", sensSlider.value);
     }
 }
