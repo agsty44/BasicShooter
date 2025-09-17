@@ -19,6 +19,8 @@ public class KillEnemy : MonoBehaviour
 
     public void Kill()
     {
+        /*
+
         //Create the new gameobject as a clone of the current one.
         float spawnX = Random.Range(-3.0f, 3.0f);
         float spawnY = Random.Range(-3.0f, 3.0f);
@@ -26,6 +28,8 @@ public class KillEnemy : MonoBehaviour
         //Extreme points are (-3, 2, -3), (3, 2, 3), (-3, 2, 3) and (3, 2, -3).
 
         Instantiate(template, spawnLoc, Quaternion.identity);
+
+        */
 
         //Delete the existing object.
         Destroy(this.gameObject);
