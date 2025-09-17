@@ -19,7 +19,7 @@ public class KillEnemy : MonoBehaviour
 
     public void Kill()
     {
-        /*
+        /* CURRENTLY COMMENTED OUT - infinitely respawning enemies no longer needed.
 
         //Create the new gameobject as a clone of the current one.
         float spawnX = Random.Range(-3.0f, 3.0f);
