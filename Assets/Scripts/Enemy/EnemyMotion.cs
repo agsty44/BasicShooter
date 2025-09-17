@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyMotion : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class EnemyMotion : MonoBehaviour
     private CharacterController enemyControl;
     private float yVelocity = 0;
     private float gravConstant, enemySpeed;
-    private float timeBetweenDirectionChange = 0.0f;
-    [SerializeField] private float timeToWait = 3.0f;
+    // private float timeBetweenDirectionChange = 0.0f;
+    // [SerializeField] private float timeToWait = 3.0f;
     [SerializeField] private UIHandling pauseCheck;
+    [SerializeField] private GameObject player;
+    [SerializeField] private NavMeshAgent agent;
 
 
     // Start is called before the first frame update
@@ -21,9 +24,13 @@ public class EnemyMotion : MonoBehaviour
         enemyControl = GetComponent<CharacterController>();
         settings = GetComponent<EnemySettings>();
         kill = GetComponent<KillEnemy>();
+        agent = GetComponent<NavMeshAgent>();
 
         gravConstant = settings.gravConstant;
         enemySpeed = settings.enemySpeed;
+
+        agent.updatePosition = false;
+        agent.updateRotation = false;
     }
 
     // Update is called once per frame
@@ -35,6 +42,7 @@ public class EnemyMotion : MonoBehaviour
             return;
         }
 
+        /* RANDOM MOVEMENT HAS BEEN PHASED OUT.
         //rotate the enemy a random amount, if 5 seconds have passed.
         if (timeBetweenDirectionChange >= timeToWait)
         {
@@ -46,20 +54,33 @@ public class EnemyMotion : MonoBehaviour
         {
             timeBetweenDirectionChange += Time.deltaTime;
         }
+        */
 
+        agent.SetDestination(player.transform.position);
+        
         //gravity handling. mostly unneeded on flat map but will be useful later.
-        if (enemyControl.isGrounded) {
+        if (enemyControl.isGrounded)
+        {
             yVelocity = 0.0f;
-        } else {
+        }
+        else
+        {
             yVelocity -= gravConstant * Time.deltaTime;
         }
 
+        //Set location of navmesh agent - zombie movement.
+        
+
+        
         //apply movement.
-        Vector3 move = new Vector3(enemySpeed, yVelocity, 0);
-        enemyControl.Move(transform.rotation * move * Time.deltaTime);
+        Vector3 move = new Vector3(0, yVelocity, 0);
+        move += agent.desiredVelocity;
+        enemyControl.Move(move * Time.deltaTime);
+        
 
         //Check if we are below an acceptable height: if so, kill
-        if (transform.position.y < -5) {
+        if (transform.position.y < -5)
+        {
             kill.Kill();
         }
     }
