@@ -68,6 +68,8 @@ public class UIHandling : MonoBehaviour
         //Do this with a function: it means we can have a "resume" function with a button.
 
         pauseUI.SetActive(paused);
+        settingsUI.SetActive(false); // we default to this as: if we OPEN pause, we dont want it. closing pause? also dont want it.
+        quitUI.SetActive(false);
 
         GameObject[] HUDparts = {crosshair, ammocount};
 

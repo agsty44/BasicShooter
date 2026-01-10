@@ -1,6 +1,8 @@
 *
-!Assets/** 
-!Packages/
+!Assets/
+!Assets/**
+!Assets/**/*
+
+!Packages
+
 !ProjectSettings
-!Assets/BasePrefabs/*
-!.gitignore
