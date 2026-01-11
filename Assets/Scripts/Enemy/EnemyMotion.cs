@@ -24,7 +24,7 @@ public class EnemyMotion : MonoBehaviour
         enemyControl = GetComponent<CharacterController>();
         settings = GetComponent<EnemySettings>();
         kill = GetComponent<KillEnemy>();
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
 
         gravConstant = settings.gravConstant;
         enemySpeed = settings.enemySpeed;
@@ -76,7 +76,9 @@ public class EnemyMotion : MonoBehaviour
         Vector3 move = new Vector3(0, yVelocity, 0);
         move += agent.desiredVelocity;
         enemyControl.Move(move * Time.deltaTime);
-        
+
+        //sync agent location
+        agent.nextPosition = transform.position;
 
         //Check if we are below an acceptable height: if so, kill
         if (transform.position.y < -5)

@@ -17,11 +17,15 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float reloadLength = 0.5f; //Edit this for diff reload times.
     [SerializeField] private TextMeshProUGUI ammoCountDisplay; //Set this in inspector.
     [SerializeField] private UIHandling pauseCheck;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioClip reloadSound;
+    private AudioSource sounds;
+    private bool reloadSoundPlayed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sounds = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class PlayerShooting : MonoBehaviour
         if (ammoCount == 0 && timeReloading >= reloadLength) {
             ammoCount = 12;
             timeReloading = 0;
+            sounds.PlayOneShot(reloadSound);
         }
 
         //TODO: ADD A MANUAL RELOAD HERE
@@ -77,6 +82,7 @@ public class PlayerShooting : MonoBehaviour
         Debug.Log("Firing!"); //This has also been moved up here.
         triggerReleased = false;
         timeBetweenFiring = 0; //idk how i missed this earlier, but we need to reset the shot timer.
+        sounds.PlayOneShot(shootSound);
 
         //WHY?
         /*
