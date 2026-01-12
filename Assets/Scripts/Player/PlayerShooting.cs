@@ -67,6 +67,10 @@ public class PlayerShooting : MonoBehaviour
         }
 
         //TODO: ADD A MANUAL RELOAD HERE
+        if (Input.GetKeyDown("r") && ammoCount != 12)
+        {
+            Reload();
+        }
 
         //increment time between firing to stop bullet spam
         timeBetweenFiring += Time.deltaTime;
