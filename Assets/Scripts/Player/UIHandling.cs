@@ -9,9 +9,9 @@ public class UIHandling : MonoBehaviour
 {
 
     public bool paused = false;
-    [SerializeField] private GameObject pauseUI, crosshair, ammocount, settingsUI, quitUI;
+    [SerializeField] private GameObject pauseUI, crosshair, ammocount, settingsUI, quitUI, fpsObject;
     [SerializeField] private Slider sensitivitySlider;
-    [SerializeField] private TextMeshProUGUI sensText;
+    [SerializeField] private TextMeshProUGUI sensText, fpsText;
 
     //What's the logic here?
     //Upon pressing escape: we should invert the following:
@@ -28,7 +28,7 @@ public class UIHandling : MonoBehaviour
         settingsUI.SetActive(false);
         quitUI.SetActive(false);
 
-        GameObject[] HUDparts = {crosshair, ammocount};
+        GameObject[] HUDparts = {crosshair, ammocount, fpsObject};
 
         foreach (GameObject UIelement in HUDparts)
         {
@@ -44,6 +44,11 @@ public class UIHandling : MonoBehaviour
             PauseMenu(); //toggle pause menu
             settingsUI.SetActive(false); //close the settings UI
         }
+
+        //every frame we should update the fps count
+        int inverseFrametime = Mathf.RoundToInt(1 / Time.deltaTime);
+        string fpsValue = inverseFrametime.ToString() + " FPS";
+        fpsText.text = fpsValue;
     }
 
     public void PauseMenu()
@@ -54,15 +59,7 @@ public class UIHandling : MonoBehaviour
 
         Debug.Log("Pause Pressed!");
 
-        paused ^= true;
-        //Ok, what the fuck is this?
-        //this is an XOR. so there are 2 cases:
-
-        //case 1 - paused = true
-        //as this is XOR, if both A and B are 1, we return 0, inverting the bool.
-
-        //case 2 - paused = false
-        //A is 0, B is 1. return 1. bool inverted.
+        paused = !paused;
 
         //Now we should handle changes to the UI which are made upon pause/unpause.
         //Do this with a function: it means we can have a "resume" function with a button.
@@ -71,7 +68,7 @@ public class UIHandling : MonoBehaviour
         settingsUI.SetActive(false); // we default to this as: if we OPEN pause, we dont want it. closing pause? also dont want it.
         quitUI.SetActive(false);
 
-        GameObject[] HUDparts = {crosshair, ammocount};
+        GameObject[] HUDparts = {crosshair, ammocount, fpsObject};
 
         foreach (GameObject UIelement in HUDparts)
         {

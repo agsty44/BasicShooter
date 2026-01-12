@@ -20,7 +20,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip reloadSound;
     private AudioSource sounds;
-    private bool reloadSoundPlayed = false;
+    //private bool reloadSoundPlayed = false;
 
     // Start is called before the first frame update
     void Start()
